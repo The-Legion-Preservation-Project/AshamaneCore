@@ -293,7 +293,7 @@ Unit::Unit(bool isWorldObject) :
     m_removedAurasCount(0), i_motionMaster(new MotionMaster(this)), m_regenTimer(0), m_ThreatManager(this),
     m_vehicle(NULL), m_vehicleKit(NULL), m_unitTypeMask(UNIT_MASK_NONE),
     m_HostileRefManager(this), _aiAnimKitId(0), _movementAnimKitId(0), _meleeAnimKitId(0),
-    _lastDamagedTime(0), _spellHistory(new SpellHistory(this)), _scheduler(this)
+    _spellHistory(new SpellHistory(this))
 {
     m_objectType |= TYPEMASK_UNIT;
     m_objectTypeId = TYPEID_UNIT;
@@ -939,14 +939,18 @@ uint32 Unit::DealDamage(Unit* victim, uint32 damage, CleanDamage const* cleanDam
         victim->ModifyHealth(-(int32)damage);
 
         if (damagetype == DIRECT_DAMAGE || damagetype == SPELL_DIRECT_DAMAGE)
-        {
             victim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_DIRECT_DAMAGE, spellProto ? spellProto->Id : 0);
-            victim->UpdateLastDamagedTime(spellProto);
             victim->SaveDamageHistory(damage);
         }
 
         if (victim->GetTypeId() != TYPEID_PLAYER)
+        {
+            // Part of Evade mechanics. DoT's and Thorns / Retribution Aura do not contribute to this
+            if (damagetype != DOT && damage > 0 && !victim->GetOwnerGUID().IsPlayer() && (!spellProto || !spellProto->HasAura(GetMap()->GetDifficultyID(), SPELL_AURA_DAMAGE_SHIELD)))
+                victim->ToCreature()->SetLastDamagedTime(sWorld->GetGameTime() + MAX_AGGRO_RESET_TIME);
+
             victim->AddThreat(this, float(damage), damageSchoolMask, spellProto);
+        }
         else                                                // victim is a player
         {
             // random durability for items (HIT TAKEN)
@@ -14552,49 +14556,6 @@ int32 Unit::GetHighestExclusiveSameEffectSpellGroupValue(AuraEffect const* aurEf
         }
     }
     return val;
-}
-
-void Unit::UpdateLastDamagedTime(SpellInfo const* spellProto)
-{
-    if (GetTypeId() != TYPEID_UNIT || IsPet())
-        return;
-
-    if (spellProto && spellProto->HasAura(DIFFICULTY_NONE, SPELL_AURA_DAMAGE_SHIELD))
-        return;
-
-    SetLastDamagedTime(time(nullptr));
-}
-
-#define MAX_DAMAGE_HISTORY_DURATION 20
-
-void Unit::SaveDamageHistory(uint32 damage)
-{
-    uint32 currentTime = getMSTime();
-    uint32 maxPastTime = currentTime - MAX_DAMAGE_HISTORY_DURATION * IN_MILLISECONDS;
-
-    // Remove damages older than maxPastTime, can be increased if required
-    for (auto itr = _damageTakenHistory.begin(); itr != _damageTakenHistory.end();)
-    {
-        if (itr->first < maxPastTime)
-            itr = _damageTakenHistory.erase(itr);
-        else
-            ++itr;
-    }
-
-    _damageTakenHistory[currentTime] += damage;
-}
-
-uint32 Unit::GetDamageOverLastSeconds(uint32 seconds) const
-{
-    ASSERT(seconds <= MAX_DAMAGE_HISTORY_DURATION, "Damage history ms cannot be lower than MAX_DAMAGE_HISTORY_DURATION");
-    time_t maxPastTime = getMSTime() - seconds * IN_MILLISECONDS;
-
-    uint32 damageOverLastSeconds = 0;
-    for (auto itr = _damageTakenHistory.begin(); itr != _damageTakenHistory.end(); ++itr)
-        if (itr->first >= maxPastTime)
-            damageOverLastSeconds += itr->second;
-
-    return damageOverLastSeconds;
 }
 
 bool Unit::IsHighestExclusiveAura(Aura const* aura, bool removeOtherAuraApplications /*= false*/)
