@@ -1,8 +1,8 @@
-SET @CGUID = 300000001;
+SET @CGUID:=300000001;
 DELETE FROM `creature` WHERE `id` IN (2079, 49480);
 INSERT INTO `creature` (`guid`, `id`, `map`, `zoneId`, `areaId`, `spawnDifficulties`, `phaseUseFlags`, `PhaseId`, `PhaseGroup`, `terrainSwapMap`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `unit_flags2`, `unit_flags3`, `dynamicflags`, `ScriptName`, `VerifiedBuild`) VALUES
-('@CGUID+0','49480','1','0','0','0','0','0','0','-1','0','0','10756.2','923.958','1338.4','3.02752','300','0','0','261','0','0','0','0','0','0','0','','0'),
-('@CGUID+1','2079','1','0','0','0','0','0','0','-1','0','1','10312.7','830.122','1326.53','2.37365','120','0','0','1','0','0','0','0','0','0','0','','0');
+(@CGUID+0,'49480','1','0','0','0','0','0','0','-1','0','0','10756.2','923.958','1338.4','3.02752','300','0','0','261','0','0','0','0','0','0','0','','0'),
+(@CGUID+1,'2079','1','0','0','0','0','0','0','-1','0','1','10312.7','830.122','1326.53','2.37365','120','0','0','1','0','0','0','0','0','0','0','','0');
 
 DELETE FROM `quest_template_addon` WHERE `ID` = 2438;
 INSERT INTO `quest_template_addon` (`ID`, `MaxLevel`, `AllowableClasses`, `SourceSpellID`, `PrevQuestID`, `NextQuestID`, `ExclusiveGroup`, `RewardMailTemplateID`, `RewardMailDelay`, `RequiredSkillID`, `RequiredSkillPoints`, `RequiredMinRepFaction`, `RequiredMaxRepFaction`, `RequiredMinRepValue`, `RequiredMaxRepValue`, `ProvidedItemCount`, `SpecialFlags`, `ScriptName`) VALUES
