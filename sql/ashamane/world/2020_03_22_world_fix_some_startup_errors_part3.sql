@@ -9,8 +9,8 @@ AshamaneCoreLegacy-Legion
 
 
 /*set vendor flags for vendors*/
-UPDATE `creature_template` SET `npcflag`=128 WHERE `entry`=92185 OR `entry`=98367;
-UPDATE `creature` SET `npcflag`=128 WHERE `id`=92185 OR `id`=98367;
+UPDATE `creature_template` SET `npcflag`=128 WHERE `entry` IN (92185, 98367);
+UPDATE `creature` SET `npcflag`=128 WHERE `id` IN (92185, 98367);
 
 
 /*groupid missing*/
@@ -65,8 +65,8 @@ UPDATE `npc_vendor` SET `incrtime`=3600 WHERE `entry`=133239 AND `item`=5772;
 UPDATE `npc_vendor` SET `incrtime`=3600 WHERE `entry`=133239 AND `item`=6270;
 UPDATE `npc_vendor` SET `incrtime`=3600 WHERE `entry`=133239 AND `item`=10314;
 
-
-replace  into `creature_classlevelstats`(`level`,`class`,`basemana`,`basearmor`,`attackpower`,`rangedattackpower`,`damage_base`,`damage_exp1`,`damage_exp2`,`damage_exp3`,`damage_exp4`,`damage_exp5`,`comment`) values 
+DELETE FROM `npc_vendor` WHERE `level` IN (116, 117, 118, 119, 119, 120);
+insert  into `creature_classlevelstats`(`level`,`class`,`basemana`,`basearmor`,`attackpower`,`rangedattackpower`,`damage_base`,`damage_exp1`,`damage_exp2`,`damage_exp3`,`damage_exp4`,`damage_exp5`,`comment`) values 
 (116,1,1,1,0,0,0,0,0,0,0,0,NULL),
 (117,1,1,1,0,0,0,0,0,0,0,0,NULL),
 (118,1,1,1,0,0,0,0,0,0,0,0,NULL),
