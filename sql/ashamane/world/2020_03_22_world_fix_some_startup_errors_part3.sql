@@ -65,7 +65,7 @@ UPDATE `npc_vendor` SET `incrtime`=3600 WHERE `entry`=133239 AND `item`=5772;
 UPDATE `npc_vendor` SET `incrtime`=3600 WHERE `entry`=133239 AND `item`=6270;
 UPDATE `npc_vendor` SET `incrtime`=3600 WHERE `entry`=133239 AND `item`=10314;
 
-DELETE FROM `npc_vendor` WHERE `level` IN (116, 117, 118, 119, 119, 120);
+DELETE FROM `creature_classlevelstats` WHERE `level` IN (116, 117, 118, 119, 119, 120);
 insert  into `creature_classlevelstats`(`level`,`class`,`basemana`,`basearmor`,`attackpower`,`rangedattackpower`,`damage_base`,`damage_exp1`,`damage_exp2`,`damage_exp3`,`damage_exp4`,`damage_exp5`,`comment`) values 
 (116,1,1,1,0,0,0,0,0,0,0,0,NULL),
 (117,1,1,1,0,0,0,0,0,0,0,0,NULL),
