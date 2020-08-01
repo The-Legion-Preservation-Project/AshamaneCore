@@ -17,7 +17,7 @@
 
 ## Build Status
 
-[![legion Build Status](https://travis-ci.org/TheGhostGroup/AshamaneCoreLegacy.svg?branch=master)](https://travis-ci.org/TheGhostGroup/AshamaneCoreLegacy)
+[![legion Build Status](https://travis-ci.org/TheGhostGroup/AshamaneCoreLegacy.svg?branch=legion)](https://travis-ci.org/TheGhostGroup/AshamaneCoreLegacy)
 
 
 ## Introduction
