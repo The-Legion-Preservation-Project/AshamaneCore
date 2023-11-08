@@ -17,12 +17,12 @@
 
 ## Build Status
 
-[![master Build Status](https://travis-ci.org/AshamaneProject/AshamaneCore.svg?branch=master)](https://travis-ci.org/AshamaneProject/AshamaneCore)
-[![Build status](https://ci.appveyor.com/api/projects/status/kb0wjxh3va9c3e0k/branch/master?svg=true)](https://ci.appveyor.com/project/Traesh/ashamanecore/branch/master)
+[![legion Build Status](https://travis-ci.org/TheGhostGroup/AshamaneCoreLegacy.svg?branch=legion)](https://travis-ci.org/TheGhostGroup/AshamaneCoreLegacy)
+
 
 ## Introduction
 
-AshamaneCore is a *MMORPG* Framework based mostly in C++.
+Legacy Legion is a *MMORPG* Framework based mostly in C++.
 
 It is fully based on *TrinityCore*, with upgrades like :
 
@@ -50,7 +50,7 @@ It is fully based on *TrinityCore*, with upgrades like :
 - Pandaria Scripts
     - all dungeons & world bosses
 
-with Ashamane Database (ADB) :
+with Legacy Legion Database (LLDB) :
 
 - All Cataclysm zones spawns
 - All Mist of Pandaria zones spawns
@@ -60,7 +60,7 @@ with Ashamane Database (ADB) :
 It is completely open source; community involvement is highly encouraged.
 
 If you wish to contribute ideas or code please visit our site linked below or
-make pull requests to our [Github repository](https://github.com/AshamaneProject/AshamaneCore/pulls).
+make pull requests to our [Github repository](https://github.com/LegacyProject/LegacyLegion/pulls).
 
 ## Requirements
 
@@ -74,11 +74,11 @@ Windows, Linux and macOS.
 
 ## Contribute
 
-You can help Ashamane using our [Patreon Page](https://www.patreon.com/ashamane). All the collected money will be used to pay developers for their work using bountysource
+
 
 ## Reporting issues
 
-Issues can be reported via our [Mantis issue tracker](https://bt.ashamane.com).
+Issues can be reported via our github [Issues](https://github.com/LegacyProject/LegacyLegion/issues).
 
 Please take the time to review existing issues before submitting your own to
 prevent duplicates.
@@ -100,7 +100,5 @@ Read file [THANKS](THANKS).
 
 ## Links
 
-* [Website](https://www.ashamane.com)
+* [Discord](discord.gg/c8nfja)
 * [Wiki](https://www.trinitycore.info)
-* [Forums](http://forum.ashamane.com/)
-* [TrinityCore](https://www.trinitycore.org/)

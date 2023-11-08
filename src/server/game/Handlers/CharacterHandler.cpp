@@ -344,7 +344,7 @@ void WorldSession::HandleCharEnum(PreparedQueryResult result)
     }
 
     charEnum.IsDemonHunterCreationAllowed = GetAccountExpansion() >= EXPANSION_LEGION || canAlwaysCreateDemonHunter;
-    charEnum.IsAlliedRacesCreationAllowed = GetAccountExpansion() >= EXPANSION_BATTLE_FOR_AZEROTH;
+    charEnum.IsAlliedRacesCreationAllowed = GetAccountExpansion() >= EXPANSION_LEGION;
 
     for (std::pair<uint8 const, RaceUnlockRequirement> const& requirement : sObjectMgr->GetRaceUnlockRequirements())
     {
@@ -957,6 +957,8 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
     WorldPackets::BattlePet::BattlePetJournalLockAcquired lock;
     SendPacket(lock.Write());
 
+    pCurrChar->SendInitialPacketsBeforeAddToMap();
+
     WorldPackets::Artifact::ArtifactKnowledge artifactKnowledge;
     artifactKnowledge.ArtifactCategoryID = ARTIFACT_CATEGORY_PRIMARY;
     artifactKnowledge.KnowledgeLevel = sWorld->getIntConfig(CONFIG_CURRENCY_START_ARTIFACT_KNOWLEDGE);
@@ -967,8 +969,6 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
     artifactKnowledgeFishingPole.KnowledgeLevel = 0;
     SendPacket(artifactKnowledgeFishingPole.Write());
 
-    pCurrChar->SendInitialPacketsBeforeAddToMap();
-
     //Show cinematic at the first time that player login
     if (!pCurrChar->getCinematic())
     {
@@ -976,40 +976,29 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
 
         if (ChrClassesEntry const* cEntry = sChrClassesStore.LookupEntry(pCurrChar->getClass()))
         {
-            if (pCurrChar->getClass() == CLASS_DEMON_HUNTER) /// @todo: find a more generic solution
+            if (pCurrChar->getClass() == CLASS_DEMON_HUNTER)
                 pCurrChar->SendMovieStart(469);
             else if (cEntry->CinematicSequenceID)
                 pCurrChar->SendCinematicStart(cEntry->CinematicSequenceID);
             else if (ChrRacesEntry const* rEntry = sChrRacesStore.LookupEntry(pCurrChar->getRace()))
             {
-                if (rEntry->CinematicSequenceID)
+                if (pCurrChar->getRace() == RACE_NIGHTBORNE)
+                    pCurrChar->GetSceneMgr().PlayScene(1900);
+                else if (pCurrChar->getRace() == RACE_HIGHMOUNTAIN_TAUREN)
+                    pCurrChar->GetSceneMgr().PlayScene(1901);
+                else if (pCurrChar->getRace() == RACE_VOID_ELF)
+                    pCurrChar->GetSceneMgr().PlayScene(1903);
+                else if (pCurrChar->getRace() == RACE_LIGHTFORGED_DRAENEI)
+                    pCurrChar->GetSceneMgr().PlayScene(1902);
+                else if (rEntry->CinematicSequenceID)
                     pCurrChar->SendCinematicStart(rEntry->CinematicSequenceID);
-                else
-                {
-                    switch (pCurrChar->getRace())
-                    {
-                      case RACE_HIGHMOUNTAIN_TAUREN:
-                            pCurrChar->GetSceneMgr().PlayScene(1901);
-                            break;
-                        case RACE_NIGHTBORNE:
-                            pCurrChar->GetSceneMgr().PlayScene(1900);
-                            break;
-                        case RACE_LIGHTFORGED_DRAENEI:
-                            pCurrChar->GetSceneMgr().PlayScene(1902);
-                            break;
-                        case RACE_VOID_ELF:
-                            pCurrChar->GetSceneMgr().PlayScene(1903);
-                            break;
-                        default:
-                            break;
-                    }
-                }
             }
 
             // send new char string if not empty
             if (!sWorld->GetNewCharString().empty())
                 chH.PSendSysMessage("%s", sWorld->GetNewCharString().c_str());
         }
+
     }
 
     if (!pCurrChar->GetMap()->AddPlayerToMap(pCurrChar))

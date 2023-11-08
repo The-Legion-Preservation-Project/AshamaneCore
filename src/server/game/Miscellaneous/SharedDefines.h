@@ -95,8 +95,6 @@ enum Expansions
     EXPANSION_LEGION                   = 6,
     MAX_EXPANSIONS,
 
-    // future expansion
-    EXPANSION_BATTLE_FOR_AZEROTH       = 7,
 
     MAX_ACCOUNT_EXPANSIONS
 };
@@ -387,6 +385,13 @@ enum SpellCategory
 {
     SPELL_CATEGORY_FOOD             = 11,
     SPELL_CATEGORY_DRINK            = 59
+};
+
+enum WorgenRacialSpells
+{
+    SPELL_RUNNING_WILD_LEARN        = 94098,
+    SPELL_TWO_FORMS_RACIAL          = 68996,
+    SPELL_ALTERED_FORM_RACIAL       = 97709
 };
 
 const uint32 ItemQualityColors[MAX_ITEM_QUALITY] =
@@ -2310,7 +2315,7 @@ enum Targets
     TARGET_UNK_126                     = 126,
     TARGET_DEST_CASTER_ENEMY_CENTROID  = 127,
     TARGET_UNK_128                     = 128,
-    TARGET_UNIT_CASTER_AREA_ENEMY_FRONT= 129,
+    TARGET_UNIT_CONE_ENTRY_129         = 129,
     TARGET_ENNEMY_IN_LINE              = 130,
     TARGET_UNK_131                     = 131,
     TARGET_DEST_TARGET_ALLY            = 132,
