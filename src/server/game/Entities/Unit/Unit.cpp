@@ -940,7 +940,7 @@ uint32 Unit::DealDamage(Unit* victim, uint32 damage, CleanDamage const* cleanDam
 
         if (damagetype == DIRECT_DAMAGE || damagetype == SPELL_DIRECT_DAMAGE)
             victim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_DIRECT_DAMAGE, spellProto ? spellProto->Id : 0);
-            victim->SaveDamageHistory(damage);
+
         }
 
         if (victim->GetTypeId() != TYPEID_PLAYER)
@@ -1013,10 +1013,10 @@ uint32 Unit::DealDamage(Unit* victim, uint32 damage, CleanDamage const* cleanDam
         }
     }
 
-    TC_LOG_DEBUG("entities.unit", "DealDamageEnd returned %d damage", damage);
+    //TC_LOG_DEBUG("entities.unit", "DealDamageEnd returned %d damage", damage);
 
-    return damage;
-}
+    //return damage;
+
 
 void Unit::CastStop(uint32 except_spellid)
 {

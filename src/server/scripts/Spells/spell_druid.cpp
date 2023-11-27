@@ -2172,29 +2172,6 @@ class aura_dru_feral_affinity_tank : public AuraScript
     }
 };
 
-// 22842 - Frenzied Regeneration
-class aura_dru_frenzied_regeneration : public AuraScript
-{
-    PrepareAuraScript(aura_dru_frenzied_regeneration);
-
-    void CalcAmount(AuraEffect const* aurEff, int32& amount, bool& /*canBeRecalculated*/)
-    {
-        uint64 healAmount = CalculatePct(GetCaster()->GetDamageOverLastSeconds(5), 50);
-        uint64 minHealAmount = CalculatePct(GetCaster()->GetMaxHealth(), 5);
-        healAmount = std::max(healAmount, minHealAmount);
-
-        // Divide amount over duration
-        healAmount /= (GetMaxDuration() / aurEff->GetPeriodicTimer());
-
-        amount = (int32)healAmount;
-    }
-
-    void Register() override
-    {
-        DoEffectCalcAmount += AuraEffectCalcAmountFn(aura_dru_frenzied_regeneration::CalcAmount, EFFECT_0, SPELL_AURA_PERIODIC_HEAL);
-    }
-};
-
 enum StarfallSpells
 {
     SPELL_DRUID_STARFALL_DAMAGE      = 191037,
@@ -2688,7 +2665,7 @@ void AddSC_druid_spell_scripts()
     RegisterAuraScript(aura_dru_restoration_affinity);
     RegisterAuraScript(aura_dru_feral_affinity_resto);
     RegisterAuraScript(aura_dru_feral_affinity_tank);
-    RegisterAuraScript(aura_dru_frenzied_regeneration);
+
 
     // AreaTrigger Scripts
     new at_dru_solar_beam();

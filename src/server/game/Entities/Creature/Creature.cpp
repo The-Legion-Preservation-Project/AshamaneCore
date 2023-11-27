@@ -456,25 +456,20 @@ bool Creature::UpdateEntry(uint32 entry, CreatureData const* data /*= nullptr*/,
     ObjectMgr::ChooseCreatureFlags(cInfo, npcFlags, unitFlags, unitFlags2, unitFlags3, dynamicFlags, data);
 
     if (cInfo->flags_extra & CREATURE_FLAG_EXTRA_WORLDEVENT)
-        npcFlags |= sGameEventMgr->GetNPCFlag(this);
-
-    SetNpcFlags(NPCFlags(npcFlags & 0xFFFFFFFF));
-    SetNpcFlags2(NPCFlags2(npcFlags >> 32));
+        SetUInt64Value(UNIT_NPC_FLAGS, npcFlags | sGameEventMgr->GetNPCFlag(this));
+    else
+        SetUInt64Value(UNIT_NPC_FLAGS, npcFlags);
 
         // if unit is in combat, keep this flag
     unitFlags &= ~UNIT_FLAG_IN_COMBAT;
     if (IsInCombat())
         unitFlags |= UNIT_FLAG_IN_COMBAT;
 
-    SetUnitFlags(UnitFlags(unitFlags));
-    SetUnitFlags2(UnitFlags2(unitFlags2));
-    SetUnitFlags3(UnitFlags3(unitFlags3));
+    SetUInt32Value(UNIT_FIELD_FLAGS, unitFlags);
+    SetUInt32Value(UNIT_FIELD_FLAGS_2, unitFlags2);
+    SetUInt32Value(UNIT_FIELD_FLAGS_3, unitFlags3);
 
-    SetDynamicFlags(dynamicFlags);
-
-    SetUpdateFieldValue(m_values.ModifyValue(&Unit::m_unitData).ModifyValue(&UF::UnitData::StateAnimID), sAnimationDataStore.GetNumRows());
-
-    RemoveUnitFlag(UNIT_FLAG_IN_COMBAT);
+    SetUInt32Value(OBJECT_DYNAMIC_FLAGS, dynamicFlags);
 
     SetBaseAttackTime(BASE_ATTACK,   cInfo->BaseAttackTime);
     SetBaseAttackTime(OFF_ATTACK,    cInfo->BaseAttackTime);
@@ -760,7 +755,7 @@ void Creature::Regenerate(Powers power)
     uint32 curValue = GetPower(power);
     uint32 maxValue = GetMaxPower(power);
 
-    if (!HasUnitFlag2(UNIT_FLAG2_REGENERATE_POWER))
+    if (!HasFlag(UNIT_FIELD_FLAGS_2, UNIT_FLAG2_REGENERATE_POWER))
         return;
 
     if (curValue >= maxValue)
