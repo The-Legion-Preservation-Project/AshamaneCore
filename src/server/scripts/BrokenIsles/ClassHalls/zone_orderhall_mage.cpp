@@ -18,6 +18,6 @@
 
 #include "ScriptMgr.h"
 
-void AddSC_class_hall_rogue()
+void AddSC_zone_orderhall_mage()
 {
 }

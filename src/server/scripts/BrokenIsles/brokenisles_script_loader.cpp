@@ -37,18 +37,18 @@ void AddSC_zone_mardum();
 void AddSC_zone_vault_of_wardens();
 
 // Class Halls
-void AddSC_class_hall_dh();
-void AddSC_class_hall_dk();
-void AddSC_class_hall_druid();
-void AddSC_class_hall_hunter();
-void AddSC_class_hall_mage();
-void AddSC_class_hall_monk();
-void AddSC_class_hall_paladin();
-void AddSC_class_hall_priest();
-void AddSC_class_hall_rogue();
-void AddSC_class_hall_shaman();
-void AddSC_class_hall_warlock();
-void AddSC_class_hall_warrior();
+void AddSC_zone_orderhall_dh();
+void AddSC_zone_orderhall_dk();
+void AddSC_zone_orderhall_druid();
+void AddSC_zone_orderhall_hunter();
+void AddSC_zone_orderhall_mage();
+void AddSC_zone_orderhall_monk();
+void AddSC_zone_orderhall_paladin();
+void AddSC_zone_orderhall_priest();
+void AddSC_zone_orderhall_rogue();
+void AddSC_zone_orderhall_shaman();
+void AddSC_zone_orderhall_warlock();
+void AddSC_zone_orderhall_warrior();
 
 // Professions
 void AddSC_legion_profession_blacksmithing();
