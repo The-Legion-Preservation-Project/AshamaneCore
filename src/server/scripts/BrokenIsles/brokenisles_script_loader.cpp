@@ -198,18 +198,18 @@ void AddBrokenIslesScripts()
     AddSC_zone_vault_of_wardens();
 
     // Class Halls
-    AddSC_class_hall_dh();
-    AddSC_class_hall_dk();
-    AddSC_class_hall_druid();
-    AddSC_class_hall_hunter();
-    AddSC_class_hall_mage();
-    AddSC_class_hall_monk();
-    AddSC_class_hall_paladin();
-    AddSC_class_hall_priest();
-    AddSC_class_hall_rogue();
-    AddSC_class_hall_shaman();
-    AddSC_class_hall_warlock();
-    AddSC_class_hall_warrior();
+    AddSC_zone_orderhall_dh();
+    AddSC_zone_orderhall_dk();
+    AddSC_zone_orderhall_druid();
+    AddSC_zone_orderhall_hunter();
+    AddSC_zone_orderhall_mage();
+    AddSC_zone_orderhall_monk();
+    AddSC_zone_orderhall_paladin();
+    AddSC_zone_orderhall_priest();
+    AddSC_zone_orderhall_rogue();
+    AddSC_zone_orderhall_shaman();
+    AddSC_zone_orderhall_warlock();
+    AddSC_zone_orderhall_warrior();
 
     // Professions
     AddSC_legion_profession_blacksmithing();
