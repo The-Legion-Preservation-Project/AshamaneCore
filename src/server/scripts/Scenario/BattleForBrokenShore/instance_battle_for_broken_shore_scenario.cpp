@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (C) 2017-2018 AshamaneProject <https://github.com/AshamaneProject>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -15,5 +15,5 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "ScriptMgr.h"
-#include "battle_for_broken_shore_scenario.h
+#include "battle_for_broken_shore_scenario.h"
 
