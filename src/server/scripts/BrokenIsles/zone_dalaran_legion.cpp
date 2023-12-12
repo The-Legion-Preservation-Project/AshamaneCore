@@ -34,10 +34,24 @@
  * Legion Intro
  */
 
-enum
+enum DalaranIntro
 {
     PHASE_DALARAN_KARAZHAN  = 5829,
     QUEST_BLINK_OF_AN_EYE   = 44663,
+};
+
+enum DalaranIntroSpells
+{
+    SPELL_MAGE_LEARN_GUARDIAN_HALL_TP   = 204287,
+    SPELL_WAR_LEARN_JUMP_TO_SKYHOLD     = 192084,
+    SPELL_DRUID_CLASS_HALL_TP           = 204874,
+    SPELL_CREATE_CLASS_HALL_ALLIANCE    = 185506,
+    SPELL_CREATE_CLASS_HALL_HORDE       = 192191,
+};
+
+enum DalaranIntroEtc
+{
+    CONVERSATION_KHADGAR_BLINK_OF_EYE = 3827,
 };
 
 // TODO : All this script is temp fix,
@@ -47,16 +61,7 @@ class OnLegionArrival : public PlayerScript
 public:
     OnLegionArrival() : PlayerScript("OnLegionArrival") { }
 
-    enum
-    {
-        SPELL_MAGE_LEARN_GUARDIAN_HALL_TP   = 204287,
-        SPELL_WAR_LEARN_JUMP_TO_SKYHOLD     = 192084,
-        SPELL_DRUID_CLASS_HALL_TP           = 204874,
-        SPELL_CREATE_CLASS_HALL_ALLIANCE    = 185506,
-        SPELL_CREATE_CLASS_HALL_HORDE       = 192191,
 
-        CONVERSATION_KHADGAR_BLINK_OF_EYE   = 3827,
-    };
 
     void OnLogin(Player* player, bool firstLogin) override
     {
@@ -103,15 +108,15 @@ public:
     }
 };
 
+enum OnLevelReached
+{
+    QUEST_UNITING_THE_ISLES = 43341,
+};
+
 class On110Arrival : public PlayerScript
 {
 public:
     On110Arrival() : PlayerScript("On110Arrival") { }
-
-    enum
-    {
-        QUEST_UNITING_THE_ISLES     = 43341,
-    };
 
     void OnLogin(Player* player, bool firstLogin) override
     {
@@ -168,16 +173,16 @@ class spell_dalaran_teleportation : public SpellScript
     }
 };
 
+enum KhadgarDalaranDeadwind
+{
+    SPELL_PLAY_DALARAN_TELEPORTATION_SCENE = 227861
+};
+
 // 113986 - Khadgar
 class npc_dalaran_karazhan_khadgar : public CreatureScript
 {
 public:
     npc_dalaran_karazhan_khadgar() : CreatureScript("npc_dalaran_karazhan_khadgar") { }
-
-    enum
-    {
-        SPELL_PLAY_DALARAN_TELEPORTATION_SCENE = 227861
-    };
 
     bool OnGossipSelect(Player* player, Creature* /*creature*/, uint32 /*uiSender*/, uint32 /*uiAction*/) override
     {
@@ -200,8 +205,25 @@ public:
     void OnSceneEnd(Player* player, uint32 /*sceneInstanceID*/, SceneTemplate const* /*sceneTemplate*/) override
     {
         player->KilledMonsterCredit(114506);
-        player->TeleportTo(1220, -827.82f, 4369.25f, 738.64f, 1.893364f);
+        player->TeleportTo(MAP_BROKEN_ISLANDS, -827.82f, 4369.25f, 738.64f, 1.893364f);
     }
+};
+
+enum OrderHallIntroSpells
+{
+    SPELL_SUMMON_EITRIGG                = 216443,
+    SPELL_SUMMON_DALTON                 = 216497,
+    SPELL_SUMMON_PALADIN                = 190886,
+    SPELL_SUMMON_SNOWFEATHER            = 196908,
+    SPELL_SUMMON_RAVENHOLDT_COURIER     = 201208,
+    SPELL_SUMMON_PRIEST_MESSENGER_H     = 226409,
+    SPELL_SUMMON_PRIEST_MESSENGER_A     = 226412,
+    SPELL_AN_AUDIENCE_WITH_THE_KING     = 200023,
+    SPELL_MAGE_ORDERHALL_FORMATION      = 195356,
+    SPELL_SUMMON_RISSTYN                = 204860,
+    SPELL_SUMMON_DA_NEL                 = 193978,
+    SPELL_SUMMON_ARCH_DRUID_HAMUUL      = 199277,
+    SPELL_SUMMON_KORVAS_BLOODTHORN      = 195286
 };
 
 /*
@@ -226,17 +248,20 @@ public:
     }
 };
 
+enum KhadgarAzsunaIntro
+{
+    QUEST_DOWN_TO_AZSUNA                = 41220,
+    SPELL_TAXI_DALARAN_AZSUNA_ALLIANCE  = 205098,
+    SPELL_TAXI_DALARAN_AZSUNA_HORDE     = 205203,
+    KHADGAR_SAY_SECOND_LINE             = 1,
+};
+
 class npc_archmage_khadgar_86563 : public CreatureScript
 {
 public:
     npc_archmage_khadgar_86563() : CreatureScript("npc_archmage_khadgar_86563") { }
 
-    enum eNpc
-    {   
-        QUEST_DOWN_TO_AZSUNA = 41220,
-        SPELL_TAXI_DALARAN_AZSUNA_ALLIANCE = 205098,
-        SPELL_TAXI_DALARAN_AZSUNA_HORDE = 205203,
-    };
+
 
     bool OnGossipSelect(Player* player, Creature* /*creature*/, uint32 /*sender*/, uint32 /*action*/) override
     {
@@ -250,7 +275,7 @@ public:
     {
         if (quest->GetQuestId() == QUEST_DOWN_TO_AZSUNA)
         {
-            creature->AI()->Talk(1);
+            creature->AI()->Talk(KHADGAR_SAY_SECOND_LINE);
         }
         return true;
     }
