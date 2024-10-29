@@ -286,7 +286,7 @@ public:
         }
 
         // Once we have done everything, we can insert the new log.
-        PreparedStatement* stmt2 = LoginDatabase.GetPreparedStatement(LOGIN_INS_ALDL_IP_LOGGING);
+        LoginDatabasePreparedStatement* stmt2 = LoginDatabase.GetPreparedStatement(LOGIN_INS_ALDL_IP_LOGGING);
 
         stmt2->setUInt32(0, playerGuid);
         stmt2->setUInt64(1, guid.GetCounter());

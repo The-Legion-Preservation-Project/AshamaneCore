@@ -1365,7 +1365,7 @@ public:
             uint32 accountId        = fields[0].GetUInt32();
             std::string accountName = fields[1].GetString();
 
-            PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHAR_GUID_NAME_BY_ACC);
+            CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHAR_GUID_NAME_BY_ACC);
             stmt->setUInt32(0, accountId);
             PreparedQueryResult result2 = CharacterDatabase.Query(stmt);
 

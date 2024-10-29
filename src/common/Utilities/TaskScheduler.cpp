@@ -19,8 +19,6 @@
 #include <utility>
 #include "Errors.h"
 
-TaskScheduler::TaskScheduler() : self_reference(this, [](TaskScheduler const*) {}), _now(clock_t::now()), _predicate(EmptyValidator) { }
-
 TaskScheduler& TaskScheduler::ClearValidator()
 {
     _predicate = EmptyValidator;
@@ -91,7 +89,7 @@ void TaskScheduler::Dispatch(success_t const& callback)
         if (_task_holder.First()->_end > _now)
             break;
 
-        TaskContext context(_task_holder.Pop(), std::weak_ptr<TaskScheduler>(self_reference));
+        TaskContext context(_task_holder.Pop(), std::weak_ptr<TaskScheduler>(self_reference), GetSchedulerUnit(), GetSchedulerGameObject());
         context.Invoke();
         if (!_predicate())
             return;
@@ -186,21 +184,6 @@ TaskContext& TaskContext::Dispatch(std::function<TaskScheduler&(TaskScheduler&)>
     if (auto const owner = _owner.lock())
         apply(*owner);
 
-    return *this;
-}
-
-TaskContext::TaskContext() : _consumed(std::make_shared<bool>(true)) { }
-TaskContext::TaskContext(TaskScheduler::TaskContainer&& task, std::weak_ptr<TaskScheduler>&& owner) : _task(task), _owner(owner), _consumed(std::make_shared< bool >(false)) { }
-TaskContext::TaskContext(TaskContext const& right) = default;
-TaskContext::TaskContext(TaskContext&& right) noexcept: _task(std::move(right._task)), _owner(std::move(right._owner)), _consumed(std::move(right._consumed)) { }
-
-TaskContext& TaskContext::operator=(TaskContext const& right) = default;
-
-TaskContext& TaskContext::operator=(TaskContext&& right) noexcept
-{
-    _task = std::move(right._task);
-    _owner = std::move(right._owner);
-    _consumed = std::move(right._consumed);
     return *this;
 }
 

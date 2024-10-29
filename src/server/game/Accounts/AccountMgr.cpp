@@ -93,11 +93,11 @@ AccountOpResult AccountMgr::DeleteAccount(uint32 accountId)
         return AccountOpResult::AOR_NAME_NOT_EXIST;
 
     // Obtain accounts characters
-    stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHARS_BY_ACCOUNT_ID);
+    CharacterDatabasePreparedStatement* stmt2 = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHARS_BY_ACCOUNT_ID);
 
-    stmt->setUInt32(0, accountId);
+    stmt2->setUInt32(0, accountId);
 
-    result = CharacterDatabase.Query(stmt);
+    result = CharacterDatabase.Query(stmt2);
 
     if (result)
     {
@@ -118,19 +118,19 @@ AccountOpResult AccountMgr::DeleteAccount(uint32 accountId)
     }
 
     // table realm specific but common for all characters of account for realm
-    stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_TUTORIALS);
-    stmt->setUInt32(0, accountId);
-    CharacterDatabase.Execute(stmt);
+    stmt2 = CharacterDatabase.GetPreparedStatement(CHAR_DEL_TUTORIALS);
+    stmt2->setUInt32(0, accountId);
+    CharacterDatabase.Execute(stmt2);
 
-    stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_ACCOUNT_DATA);
-    stmt->setUInt32(0, accountId);
-    CharacterDatabase.Execute(stmt);
+    stmt2 = CharacterDatabase.GetPreparedStatement(CHAR_DEL_ACCOUNT_DATA);
+    stmt2->setUInt32(0, accountId);
+    CharacterDatabase.Execute(stmt2);
 
-    stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_CHARACTER_BAN);
-    stmt->setUInt32(0, accountId);
-    CharacterDatabase.Execute(stmt);
+    stmt2 = CharacterDatabase.GetPreparedStatement(CHAR_DEL_CHARACTER_BAN);
+    stmt2->setUInt32(0, accountId);
+    CharacterDatabase.Execute(stmt2);
 
-    SQLTransaction trans = LoginDatabase.BeginTransaction();
+    LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
 
     stmt = LoginDatabase.GetPreparedStatement(LOGIN_DEL_ACCOUNT);
     stmt->setUInt32(0, accountId);
@@ -381,7 +381,7 @@ bool AccountMgr::CheckEmail(uint32 accountId, std::string newEmail)
 uint32 AccountMgr::GetCharactersCount(uint32 accountId)
 {
     // check character count
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_SUM_CHARS);
+    CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_SUM_CHARS);
     stmt->setUInt32(0, accountId);
     PreparedQueryResult result = CharacterDatabase.Query(stmt);
 
@@ -519,7 +519,7 @@ void AccountMgr::UpdateAccountAccess(rbac::RBACData* rbac, uint32 accountId, uin
     if (rbac && securityLevel != rbac->GetSecurityLevel())
         rbac->SetSecurityLevel(securityLevel);
 
-    SQLTransaction trans = LoginDatabase.BeginTransaction();
+    LoginDatabaseTransaction trans = LoginDatabase.BeginTransaction();
     // Delete old security level from DB
     if (realmId == -1)
     {

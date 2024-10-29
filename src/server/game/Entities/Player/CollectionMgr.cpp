@@ -110,9 +110,9 @@ void CollectionMgr::LoadAccountToys(PreparedQueryResult result)
     } while (result->NextRow());
 }
 
-void CollectionMgr::SaveAccountToys(SQLTransaction& trans)
+void CollectionMgr::SaveAccountToys(LoginDatabaseTransaction& trans)
 {
-    PreparedStatement* stmt = nullptr;
+    LoginDatabasePreparedStatement* stmt = nullptr;
     for (auto const& toy : _toys)
     {
         stmt = LoginDatabase.GetPreparedStatement(LOGIN_REP_ACCOUNT_TOYS);
@@ -173,9 +173,9 @@ void CollectionMgr::LoadAccountHeirlooms(PreparedQueryResult result)
     } while (result->NextRow());
 }
 
-void CollectionMgr::SaveAccountHeirlooms(SQLTransaction& trans)
+void CollectionMgr::SaveAccountHeirlooms(LoginDatabaseTransaction& trans)
 {
-    PreparedStatement* stmt = nullptr;
+    LoginDatabasePreparedStatement* stmt = nullptr;
     for (auto const& heirloom : _heirlooms)
     {
         stmt = LoginDatabase.GetPreparedStatement(LOGIN_REP_ACCOUNT_HEIRLOOMS);
@@ -363,7 +363,7 @@ void CollectionMgr::LoadAccountMounts(PreparedQueryResult result)
     } while (result->NextRow());
 }
 
-void CollectionMgr::SaveAccountMounts(SQLTransaction& trans)
+void CollectionMgr::SaveAccountMounts(LoginDatabaseTransaction& trans)
 {
     for (auto const& mount : _mounts)
     {
@@ -518,7 +518,7 @@ void CollectionMgr::LoadAccountItemAppearances(PreparedQueryResult knownAppearan
     }
 }
 
-void CollectionMgr::SaveAccountItemAppearances(SQLTransaction& trans)
+void CollectionMgr::SaveAccountItemAppearances(LoginDatabaseTransaction& trans)
 {
     uint16 blockIndex = 0;
     boost::to_block_range(*_appearances, DynamicBitsetBlockOutputIterator([this, &blockIndex, trans](uint32 blockValue)
@@ -535,7 +535,7 @@ void CollectionMgr::SaveAccountItemAppearances(SQLTransaction& trans)
         ++blockIndex;
     }));
 
-    PreparedStatement* stmt;
+    LoginDatabasePreparedStatement* stmt;
     for (auto itr = _favoriteAppearances.begin(); itr != _favoriteAppearances.end();)
     {
         switch (itr->second)

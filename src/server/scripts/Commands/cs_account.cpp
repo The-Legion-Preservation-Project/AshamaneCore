@@ -232,7 +232,7 @@ public:
     static bool HandleAccountOnlineListCommand(ChatHandler* handler, char const* /*args*/)
     {
         ///- Get the list of accounts ID logged to the realm
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHARACTER_ONLINE);
+        CharacterDatabasePreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHARACTER_ONLINE);
 
         PreparedQueryResult result = CharacterDatabase.Query(stmt);
 
