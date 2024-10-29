@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2018 TrinityCore <https://www.trinitycore.org/>
+ * This file is part of the TrinityCore Project. See AUTHORS file for Copyright information
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -15,28 +15,20 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QueryCallbackProcessor_h__
-#define QueryCallbackProcessor_h__
+#ifndef MySQLHacks_h__
+#define MySQLHacks_h__
 
-#include "Define.h"
-#include <vector>
+#include "MySQLWorkaround.h"
+#include <type_traits>
 
-class QueryCallback;
+struct MySQLHandle : MYSQL { };
+struct MySQLResult : MYSQL_RES { };
+struct MySQLField : MYSQL_FIELD { };
+struct MySQLBind : MYSQL_BIND { };
+struct MySQLStmt : MYSQL_STMT { };
 
-class TC_DATABASE_API QueryCallbackProcessor
-{
-public:
-    QueryCallbackProcessor();
-    ~QueryCallbackProcessor();
+// mysql 8 removed my_bool typedef (it was char) and started using bools directly
+// to maintain compatibility we use this trick to retrieve which type is being used
+using MySQLBool = std::remove_pointer_t<decltype(std::declval<MYSQL_BIND>().is_null)>;
 
-    void AddQuery(QueryCallback&& query);
-    void ProcessReadyQueries();
-
-private:
-    QueryCallbackProcessor(QueryCallbackProcessor const&) = delete;
-    QueryCallbackProcessor& operator=(QueryCallbackProcessor const&) = delete;
-
-    std::vector<QueryCallback> _callbacks;
-};
-
-#endif // QueryCallbackProcessor_h__
+#endif // MySQLHacks_h__

@@ -23,12 +23,12 @@
 #ifndef __WORLDSESSION_H
 #define __WORLDSESSION_H
 
+#include "AsyncCallbackProcessor.h"
 #include "Common.h"
 #include "DatabaseEnvFwd.h"
 #include "LockedQueue.h"
 #include "ObjectGuid.h"
 #include "Packet.h"
-#include "QueryCallbackProcessor.h"
 #include "SharedDefines.h"
 #include <array>
 #include <unordered_map>
