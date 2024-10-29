@@ -31,6 +31,7 @@
 #include "Packet.h"
 #include "SharedDefines.h"
 #include <array>
+#include <atomic>
 #include <unordered_map>
 #include <unordered_set>
 

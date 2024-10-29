@@ -6948,11 +6948,11 @@ AreaTriggerTeleportStruct const* ObjectMgr::GetMapEntranceTrigger(uint32 Map) co
 
 void ObjectMgr::SetHighestGuids()
 {
-    QueryResult result = CharacterDatabase.Query("SELECT MAX(guid) FROM characters");
+    QueryResult result = CharacterDatabase.Query("SELECT MAX(`guid`) FROM characters");
     if (result)
         GetGuidSequenceGenerator<HighGuid::Player>().Set((*result)[0].GetUInt64() + 1);
 
-    result = CharacterDatabase.Query("SELECT MAX(guid) FROM item_instance");
+    result = CharacterDatabase.Query("SELECT MAX(`guid`) FROM item_instance");
     if (result)
         GetGuidSequenceGenerator<HighGuid::Item>().Set((*result)[0].GetUInt64() + 1);
 
@@ -6982,7 +6982,7 @@ void ObjectMgr::SetHighestGuids()
     if (result)
         sGuildMgr->SetNextGuildId((*result)[0].GetUInt64()+1);
 
-    result = CharacterDatabase.Query("SELECT MAX(guid) FROM groups");
+    result = CharacterDatabase.Query("SELECT MAX(`guid`) FROM `groups`");
     if (result)
         sGroupMgr->SetGroupDbStoreSize((*result)[0].GetUInt32()+1);
 
@@ -6990,11 +6990,11 @@ void ObjectMgr::SetHighestGuids()
     if (result)
         _voidItemId = (*result)[0].GetUInt64()+1;
 
-    result = WorldDatabase.Query("SELECT MAX(guid) FROM creature");
+    result = WorldDatabase.Query("SELECT MAX(`guid`) FROM creature");
     if (result)
         _creatureSpawnId = (*result)[0].GetUInt64() + 1;
 
-    result = WorldDatabase.Query("SELECT MAX(guid) FROM gameobject");
+    result = WorldDatabase.Query("SELECT MAX(`guid`) FROM gameobject");
     if (result)
         _gameObjectSpawnId = (*result)[0].GetUInt64() + 1;
 }

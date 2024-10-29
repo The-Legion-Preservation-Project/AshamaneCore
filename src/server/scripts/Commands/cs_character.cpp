@@ -609,10 +609,10 @@ public:
             }
         }
 
-        stmt = CharacterDatabase.GetPreparedStatement(CHAR_UPD_ACCOUNT_BY_GUID);
-        stmt->setUInt32(0, newAccountId);
-        stmt->setUInt32(1, targetGuid.GetCounter());
-        CharacterDatabase.DirectExecute(stmt);
+        CharacterDatabasePreparedStatement* stmt2 = CharacterDatabase.GetPreparedStatement(CHAR_UPD_ACCOUNT_BY_GUID);
+        stmt2->setUInt32(0, newAccountId);
+        stmt2->setUInt32(1, targetGuid.GetCounter());
+        CharacterDatabase.DirectExecute(stmt2);
 
         sWorld->UpdateRealmCharCount(oldAccountId);
         sWorld->UpdateRealmCharCount(newAccountId);

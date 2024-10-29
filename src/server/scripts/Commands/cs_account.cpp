@@ -256,9 +256,9 @@ public:
 
             ///- Get the username, last IP and GM level of each account
             // No SQL injection. account is uint32.
-            stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_ACCOUNT_INFO);
-            stmt->setUInt32(0, account);
-            PreparedQueryResult resultLogin = LoginDatabase.Query(stmt);
+            LoginDatabasePreparedStatement* stmt2 = LoginDatabase.GetPreparedStatement(LOGIN_SEL_ACCOUNT_INFO);
+            stmt2->setUInt32(0, account);
+            PreparedQueryResult resultLogin = LoginDatabase.Query(stmt2);
 
             if (resultLogin)
             {
