@@ -977,7 +977,7 @@ class TC_GAME_API WorldSession
         void SendAvailableHotfixes(int32 version);
 
         void InitializeSession();
-        void InitializeSessionCallback(LoginDatabaseQueryHolder const& realmHolder, CharacterDatabaseQueryHolder const& holder);
+        void InitializeSessionCallback(LoginDatabaseQueryHolder const& holder, CharacterDatabaseQueryHolder const& realmHolder);
 
         rbac::RBACData* GetRBACData();
         bool HasPermission(uint32 permissionId);
